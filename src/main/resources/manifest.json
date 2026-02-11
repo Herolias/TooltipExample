@@ -1,0 +1,22 @@
+{
+    "Group": "org.herolias",
+    "Name": "TooltipExample",
+    "Version": "0.0.2",
+    "Description": "Example plugin demonstrating DynamicTooltipsLib usage",
+    "Authors": [
+        {
+            "Name": "MineAndCraft"
+        }
+    ],
+    "Website": "https://discord.gg/7XQAnUfQfM",
+    "ServerVersion": "*",
+    "Dependencies": {
+        "org.herolias:DynamicTooltipsLib": "1.0.0"
+    },
+    "OptionalDependencies": {
+        
+    },
+    "DisabledByDefault": false,
+    "Main": "org.herolias.plugin.TooltipExample",
+    "IncludesAssetPack": true
+}

@@ -1,0 +1,64 @@
+package org.herolias.plugin;
+
+import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.plugin.JavaPlugin;
+import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+
+import org.herolias.tooltips.api.DynamicTooltipsApi;
+import org.herolias.tooltips.api.DynamicTooltipsApiProvider;
+
+import javax.annotation.Nonnull;
+
+/**
+ * Example plugin that demonstrates how to use the DynamicTooltipsLib API.
+ * <p>
+ * Registers three chat commands that each showcase a different tooltip feature:
+ * <ul>
+ *   <li>{@code /rename <name>} — overrides the item's display name</li>
+ *   <li>{@code /addTooltip <text>} — appends a line to the item's tooltip</li>
+ *   <li>{@code /replaceTooltip <text>} — replaces the entire tooltip description</li>
+ * </ul>
+ */
+public class TooltipExample extends JavaPlugin {
+
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+    private DynamicTooltipsApi tooltipsApi;
+
+    public TooltipExample(@Nonnull JavaPluginInit init) {
+        super(init);
+    }
+
+    public DynamicTooltipsApi getTooltipsApi() {
+        return tooltipsApi;
+    }
+
+    @Override
+    protected void setup() {
+        // Obtain the DynamicTooltipsLib API
+        tooltipsApi = DynamicTooltipsApiProvider.get();
+        if (tooltipsApi == null) {
+            LOGGER.atSevere().log("DynamicTooltipsLib API not available! Is the library installed?");
+            return;
+        }
+
+        // Register our tooltip providers
+        tooltipsApi.registerProvider(new RenameTooltipProvider());
+        tooltipsApi.registerProvider(new CustomTooltipProvider());
+
+        LOGGER.atInfo().log("TooltipExample: Registered tooltip providers");
+    }
+
+    @Override
+    protected void start() {
+        if (tooltipsApi == null) return;
+
+        // Register chat commands
+        this.getCommandRegistry().registerCommand(new RenameCommand(this));
+        this.getCommandRegistry().registerCommand(new AddTooltipCommand(this));
+        this.getCommandRegistry().registerCommand(new ReplaceTooltipCommand(this));
+        this.getCommandRegistry().registerCommand(new RemoveTooltipCommand(this));
+
+        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip)");
+    }
+}
