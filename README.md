@@ -10,6 +10,7 @@ This plugin registers **four chat commands** that each showcase a different tool
 | `/addTooltip <text>` | Additive lines | Appends a new line to the tooltip |
 | `/replaceTooltip <text>` | Description override | Replaces the entire tooltip description |
 | `/removeTooltip <type>` | Metadata removal | Removes tooltip data (`rename`, `lines`, `desc`, or `all`) |
+| `/morph` | Visual Overrides | Toggles the item's appearance to an Adamantite Longsword |
 
 ---
 
@@ -43,7 +44,7 @@ Declare the library as a dependency in `manifest.json`:
 
 ## How It Works
 
-The plugin uses **two `TooltipProvider` implementations** to handle all three features. Each provider reads custom data from item metadata and returns the appropriate `TooltipData`.
+The plugin uses **three `TooltipProvider` implementations** to handle all features. Each provider reads custom data from item metadata and returns the appropriate `TooltipData`.
 
 ### Plugin Setup
 
@@ -63,20 +64,13 @@ public class TooltipExample extends JavaPlugin {
         // Register our tooltip providers
         tooltipsApi.registerProvider(new RenameTooltipProvider());
         tooltipsApi.registerProvider(new CustomTooltipProvider());
+        tooltipsApi.registerProvider(new MorphTooltipProvider());
     }
 
     @Override
     protected void start() {
-        // Register chat commands
-        Universe.get().registerChatCommand("rename", (playerRef, args) -> {
-            handleRename(playerRef, args);
-        });
-        Universe.get().registerChatCommand("addTooltip", (playerRef, args) -> {
-            handleAddTooltip(playerRef, args);
-        });
-        Universe.get().registerChatCommand("replaceTooltip", (playerRef, args) -> {
-            handleReplaceTooltip(playerRef, args);
-        });
+        // ... Register commands ...
+        this.getCommandRegistry().registerCommand(new MorphCommand(this));
     }
 }
 ```
@@ -89,17 +83,7 @@ The `/rename` command writes a `rename` key into the held item's metadata, then 
 
 **Command handler:**
 ```java
-private void handleRename(PlayerRef playerRef, String args) {
-    ItemStack heldItem = getHeldItem(getPlayerEntity(playerRef));
-    
-    // Store the custom name in metadata
-    String metadata = heldItem.getMetadata();
-    metadata = setMetadataKey(metadata, "rename", args.trim());
-    heldItem.setMetadata(metadata);
-
-    // Refresh so the player sees the change instantly
-    tooltipsApi.refreshPlayer(playerRef.getUuid());
-}
+// ... (omitted for brevity)
 ```
 
 **Provider — `RenameTooltipProvider`:**
@@ -139,18 +123,7 @@ The `/addTooltip` command appends lines to the item's tooltip. Multiple lines ar
 
 **Command handler:**
 ```java
-private void handleAddTooltip(PlayerRef playerRef, String args) {
-    ItemStack heldItem = getHeldItem(getPlayerEntity(playerRef));
-
-    // Append to existing lines (pipe-separated)
-    String metadata = heldItem.getMetadata();
-    String existing = getMetadataKey(metadata, "tooltip_lines");
-    String newLines = (existing != null) ? existing + "|" + args.trim() : args.trim();
-    metadata = setMetadataKey(metadata, "tooltip_lines", newLines);
-    heldItem.setMetadata(metadata);
-
-    tooltipsApi.refreshPlayer(playerRef.getUuid());
-}
+// ... (omitted for brevity)
 ```
 
 **Provider — `CustomTooltipProvider` (additive mode):**
@@ -173,17 +146,7 @@ The `/replaceTooltip` command replaces the entire tooltip description, including
 
 **Command handler:**
 ```java
-private void handleReplaceTooltip(PlayerRef playerRef, String args) {
-    ItemStack heldItem = getHeldItem(getPlayerEntity(playerRef));
-
-    String metadata = heldItem.getMetadata();
-    metadata = setMetadataKey(metadata, "tooltip_desc", args.trim());
-    // Clear additive lines so the override is clean
-    metadata = removeMetadataKey(metadata, "tooltip_lines");
-    heldItem.setMetadata(metadata);
-
-    tooltipsApi.refreshPlayer(playerRef.getUuid());
-}
+// ... (omitted for brevity)
 ```
 
 **Provider — `CustomTooltipProvider` (override mode):**
@@ -197,7 +160,36 @@ builder.hashInput("desc:" + tooltipDesc);
 
 ---
 
-### Feature 4: Remove Tooltip Data (`/removeTooltip`)
+### Feature 4: Visual Overrides (`/morph`)
+
+The `/morph` command toggles a special `morph_visuals` metadata key. When present, the `MorphTooltipProvider` instructs the client to render the item as an Adamantite Longsword, even if it's logically a wooden stick!
+
+**Provider — `MorphTooltipProvider`:**
+```java
+public class MorphTooltipProvider implements TooltipProvider {
+    @Override
+    public TooltipData getTooltipData(String itemId, String metadata) {
+        if (!metadata.contains("morph_visuals")) return null;
+
+        return TooltipData.builder()
+            .hashInput("morph:adamantite") // REQUIRED: Changing visuals MUST change the hash
+            .addLine("<color is='#FF55FF'>Morphed: Adamantite Longsword</color>")
+            .visualOverrides(ItemVisualOverrides.builder()
+                .model("Items/Weapons/Longsword/Adamantite.blockymodel")
+                .texture("Items/Weapons/Longsword/Adamantite_Texture.png")
+                .icon("Icons/ItemsGenerated/Weapon_Longsword_Adamantite.png") 
+                //you can add more visual overrides
+                .build())
+            .build();
+    }
+}
+```
+
+> **Key concept:** `visualOverrides()` allows specific item instances to look completely different from their base type, without affecting server-side logic (damage, etc.).
+
+---
+
+### Feature 5: Remove Tooltip Data (`/removeTooltip`)
 
 The `/removeTooltip` command selectively removes tooltip metadata from the held item.
 

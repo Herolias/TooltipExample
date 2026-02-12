@@ -45,6 +45,7 @@ public class TooltipExample extends JavaPlugin {
         // Register our tooltip providers
         tooltipsApi.registerProvider(new RenameTooltipProvider());
         tooltipsApi.registerProvider(new CustomTooltipProvider());
+        tooltipsApi.registerProvider(new MorphTooltipProvider());
 
         LOGGER.atInfo().log("TooltipExample: Registered tooltip providers");
     }
@@ -58,7 +59,8 @@ public class TooltipExample extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new AddTooltipCommand(this));
         this.getCommandRegistry().registerCommand(new ReplaceTooltipCommand(this));
         this.getCommandRegistry().registerCommand(new RemoveTooltipCommand(this));
+        this.getCommandRegistry().registerCommand(new MorphCommand(this));
 
-        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip)");
+        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip, /morph)");
     }
 }
