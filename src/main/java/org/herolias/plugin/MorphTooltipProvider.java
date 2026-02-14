@@ -40,12 +40,16 @@ public class MorphTooltipProvider implements TooltipProvider {
                 // IMPORTANT: The hash input must include the visual state so the virtual ID changes!
                 .hashInput("morph:adamantite_longsword")
                 
-                .addLine("<color is=\"#FF55FF\">Morphed: Adamantite Longsword</color>")
+                .addLineOverride("<color is=\"#FF55FF\">Morphed: Adamantite Longsword</color>")
+                .addLineOverride("<color is=\"#FF55FF\">The item keeps all its server-side properties, but it looks like an Adamantite Longsword to the client.</color>")
                 
                 .visualOverrides(ItemVisualOverrides.builder()
                         .model("Items/Weapons/Longsword/Adamantite.blockymodel")
                         .texture("Items/Weapons/Longsword/Adamantite_Texture.png")
                         .icon("Icons/ItemsGenerated/Weapon_Longsword_Adamantite.png")
+                        .categories(new String[]{"Weapon_Longsword"})
+                        
+
                         .build())
                 .build();
     }

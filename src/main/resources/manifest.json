@@ -11,7 +11,7 @@
     "Website": "https://discord.gg/7XQAnUfQfM",
     "ServerVersion": "*",
     "Dependencies": {
-        "org.herolias:DynamicTooltipsLib": "1.0.0"
+        "org.herolias:DynamicTooltipsLib": "1.1.0"
     },
     "OptionalDependencies": {
         
