@@ -49,6 +49,7 @@ public class TooltipExample extends JavaPlugin {
         // Register new providers
         tooltipsApi.registerProvider(new RarityTooltipProvider());
         tooltipsApi.registerProvider(new AnimationTooltipProvider());
+        tooltipsApi.registerProvider(new ArmorOverrideTooltipProvider());
 
         LOGGER.atInfo().log("TooltipExample: Registered tooltip providers");
     }
@@ -67,6 +68,7 @@ public class TooltipExample extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new SetRarityCommand(this));
         this.getCommandRegistry().registerCommand(new ChangeAnimationCommand(this));
         this.getCommandRegistry().registerCommand(new ToggleAnimationCommand(this));
+        this.getCommandRegistry().registerCommand(new SetArmorCommand(this));
 
         LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip, /morph)");
     }
