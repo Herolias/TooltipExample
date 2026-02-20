@@ -17,6 +17,8 @@ import javax.annotation.Nonnull;
  *   <li>{@code /rename <name>} — overrides the item's display name</li>
  *   <li>{@code /addTooltip <text>} — appends a line to the item's tooltip</li>
  *   <li>{@code /replaceTooltip <text>} — replaces the entire tooltip description</li>
+ *   <li>{@code /addGlobalLine <text>} — appends a line to the item type globally</li>
+ *   <li>{@code /replaceGlobalTooltip <text>} — replaces the tooltip of the item type globally</li>
  * </ul>
  */
 public class TooltipExample extends JavaPlugin {
@@ -69,7 +71,10 @@ public class TooltipExample extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new ChangeAnimationCommand(this));
         this.getCommandRegistry().registerCommand(new ToggleAnimationCommand(this));
         this.getCommandRegistry().registerCommand(new SetArmorCommand(this));
+        // Register global APIs commands
+        this.getCommandRegistry().registerCommand(new AddGlobalLineCommand(this));
+        this.getCommandRegistry().registerCommand(new ReplaceGlobalTooltipCommand(this));
 
-        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip, /morph)");
+        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip, /morph, /addGlobalLine, /replaceGlobalTooltip)");
     }
 }
