@@ -13,7 +13,9 @@
     "Dependencies": {
         "org.herolias:DynamicTooltipsLib": "1.4.0"
     },
-    "OptionalDependencies": {},
+    "OptionalDependencies": {
+        
+    },
     "DisabledByDefault": false,
     "Main": "org.herolias.plugin.TooltipExample",
     "IncludesAssetPack": true

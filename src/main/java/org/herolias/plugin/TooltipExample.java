@@ -59,6 +59,7 @@ public class TooltipExample extends JavaPlugin {
     @Override
     protected void start() {
         if (tooltipsApi == null) return;
+        tooltipsApi.addGlobalLine("Tool_Pickaxe_Adamantite", "Upgrade Level 1");
 
         // Register chat commands
         this.getCommandRegistry().registerCommand(new RenameCommand(this));
