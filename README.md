@@ -35,7 +35,7 @@ Declare the library as a dependency in `manifest.json`:
     "Name": "TooltipExample",
     "Main": "org.herolias.plugin.TooltipExample",
     "Dependencies": {
-        "org.herolias:DynamicTooltipsLib": "1.0.0"
+        "org.herolias:DynamicTooltipsLib": "1.5.0"
     }
 }
 ```

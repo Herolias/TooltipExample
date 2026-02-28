@@ -1,0 +1,40 @@
+$C = "../Common.ui";
+
+@IconSize = 36;
+
+Group {
+  LayoutMode: Left;
+  Anchor: (Height: 44, Horizontal: 0);
+  Padding: (Horizontal: 8, Vertical: 4);
+  Background: (TexturePath: "../Common/ContainerPanelPatch.png", Border: 4);
+
+  Group #IconBorder {
+    Anchor: (Width: @IconSize, Height: @IconSize, Vertical: 0);
+    Background: "../Common/BlockSelectorSlotBackground.png";
+    Padding: 2;
+
+    ItemGrid #ItemIcon {
+      Anchor: (Full: 0);
+      SlotsPerRow: 1;
+      Style: (
+        SlotSize: 32,
+        SlotIconSize: 32,
+        SlotSpacing: 0,
+        SlotBackground: (Color: #00000000)
+      );
+    }
+  }
+
+  Group {
+    Anchor: (Width: 8);
+  }
+
+  Label #ItemName {
+    FlexWeight: 1;
+    Style: (
+      FontSize: 16,
+      TextColor: #c9d1d9,
+      VerticalAlignment: Center
+    );
+  }
+}

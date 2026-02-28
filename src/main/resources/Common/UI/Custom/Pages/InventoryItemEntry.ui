@@ -1,0 +1,13 @@
+$C = "../Common.ui";
+
+Group {
+  LayoutMode: Left;
+  Anchor: (Height: 40, Horizontal: 0);
+  Padding: (Horizontal: 6, Vertical: 3);
+
+  TextButton #SelectBtn {
+    FlexWeight: 1;
+    Style: $C.@SecondaryTextButtonStyle;
+    Padding: (Horizontal: 8);
+  }
+}

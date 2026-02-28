@@ -1,0 +1,47 @@
+$C = "../Common.ui";
+
+@SlotSize = 46;
+
+Group {
+  Anchor: (Width: @SlotSize, Height: @SlotSize);
+
+  Group #SlotBorder {
+    Anchor: (Full: 0);
+    Background: "../Common/BlockSelectorSlotBackground.png";
+    Padding: 2;
+
+    // Using ItemGrid (not ItemSlot) so we can set .Slots with full
+    // ItemGridSlot(ItemStack) data, which includes metadata.
+    // ItemSlot only supports .ItemId (a bare string), which strips
+    // metadata and prevents DynamicTooltipsLib from composing
+    // per-item tooltips and visual overrides.
+    ItemGrid #ItemIcon {
+      Anchor: (Full: 2);
+      SlotsPerRow: 1;
+      Style: (
+        SlotSize: 38,
+        SlotIconSize: 36,
+        SlotSpacing: 0,
+        SlotBackground: (Color: #00000000)
+      );
+    }
+  }
+
+
+
+  Group #SelectionOverlay {
+    Visible: false;
+    Anchor: (Full: 0);
+    Background: (Color: #4ade8044);
+    HitTestVisible: false;
+  }
+
+  Button #SlotButton {
+    Anchor: (Full: 0);
+    Style: ButtonStyle(
+      Default: (Background: (Color: #00000000)),
+      Hovered: (Background: (Color: #ffffff22)),
+      Pressed: (Background: (Color: #ffffff44))
+    );
+  }
+}

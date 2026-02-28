@@ -7,7 +7,8 @@ build/
 
 ### Hytale ###
 run/
-
+EcotaleMarket-decompiled/
+EcotaleMarket-1.0.10.jar
 ### IntelliJ IDEA ###
 .idea/
 *.iws

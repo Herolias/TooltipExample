@@ -8,6 +8,7 @@ import org.herolias.tooltips.api.DynamicTooltipsApi;
 import org.herolias.tooltips.api.DynamicTooltipsApiProvider;
 
 import javax.annotation.Nonnull;
+import java.nio.file.Path;
 
 /**
  * Example plugin that demonstrates how to use the DynamicTooltipsLib API.
@@ -26,6 +27,7 @@ public class TooltipExample extends JavaPlugin {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     private DynamicTooltipsApi tooltipsApi;
+    private SharedItemList sharedItemList;
 
     public TooltipExample(@Nonnull JavaPluginInit init) {
         super(init);
@@ -35,8 +37,16 @@ public class TooltipExample extends JavaPlugin {
         return tooltipsApi;
     }
 
+    public SharedItemList getSharedItemList() {
+        return sharedItemList;
+    }
+
     @Override
     protected void setup() {
+        // Initialize the shared item list (persisted to disk)
+        Path dataDir = this.getDataDirectory();
+        sharedItemList = SharedItemList.load(dataDir);
+
         // Obtain the DynamicTooltipsLib API
         tooltipsApi = DynamicTooltipsApiProvider.get();
         if (tooltipsApi == null) {
@@ -60,6 +70,8 @@ public class TooltipExample extends JavaPlugin {
     protected void start() {
         if (tooltipsApi == null) return;
         tooltipsApi.addGlobalLine("Tool_Pickaxe_Adamantite", "Upgrade Level 1");
+        tooltipsApi.addGlobalLine("Ingredient_Poop", "Upgrade Level 2");
+      
 
         // Register chat commands
         this.getCommandRegistry().registerCommand(new RenameCommand(this));
@@ -75,7 +87,11 @@ public class TooltipExample extends JavaPlugin {
         // Register global APIs commands
         this.getCommandRegistry().registerCommand(new AddGlobalLineCommand(this));
         this.getCommandRegistry().registerCommand(new ReplaceGlobalTooltipCommand(this));
+        // Register UI commands
+        this.getCommandRegistry().registerCommand(new TestUICommand(this));
+        this.getCommandRegistry().registerCommand(new OpenListCommand(this));
+        this.getCommandRegistry().registerCommand(new TestMetadataCommand(this));
 
-        LOGGER.atInfo().log("TooltipExample: Registered commands (/rename, /addTooltip, /replaceTooltip, /removeTooltip, /morph, /addGlobalLine, /replaceGlobalTooltip)");
+        LOGGER.atInfo().log("TooltipExample: Registered commands (including /testUI, /openList)");
     }
 }
