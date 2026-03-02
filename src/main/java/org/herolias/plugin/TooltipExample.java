@@ -71,6 +71,7 @@ public class TooltipExample extends JavaPlugin {
         if (tooltipsApi == null) return;
         tooltipsApi.addGlobalLine("Tool_Pickaxe_Adamantite", "Upgrade Level 1");
         tooltipsApi.addGlobalLine("Ingredient_Poop", "Upgrade Level 2");
+        tooltipsApi.addGlobalTranslationLine("Ingredient_Poop", "server.tooltipexample.global.deletethis");
       
 
         // Register chat commands
