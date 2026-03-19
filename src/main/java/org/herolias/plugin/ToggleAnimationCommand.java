@@ -55,8 +55,6 @@ public class ToggleAnimationCommand extends CommandBase {
         ItemStack updated = heldItem.withMetadata(metadata);
         player.getInventory().getHotbar().setItemStackForSlot(
                 (short) player.getInventory().getActiveHotbarSlot(), updated);
-        player.getInventory().markChanged();
-        player.sendInventory();
 
         // Refresh tooltips for player
         plugin.getTooltipsApi().refreshPlayer(player.getUuid());

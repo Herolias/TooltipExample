@@ -61,8 +61,6 @@ public class RenameCommand extends CommandBase {
         ItemStack updated = heldItem.withMetadata(metadata);
         player.getInventory().getHotbar().setItemStackForSlot(
                 (short) player.getInventory().getActiveHotbarSlot(), updated);
-        player.getInventory().markChanged();
-        player.sendInventory();
 
         // Refresh tooltips so the change is visible immediately
         plugin.getTooltipsApi().refreshPlayer(player.getUuid());

@@ -78,8 +78,6 @@ public class SetArmorCommand extends CommandBase {
         ItemStack updated = heldItem.withMetadata(metadata);
         player.getInventory().getHotbar().setItemStackForSlot(
                 (short) player.getInventory().getActiveHotbarSlot(), updated);
-        player.getInventory().markChanged();
-        player.sendInventory();
 
         plugin.getTooltipsApi().refreshPlayer(player.getUuid());
     }

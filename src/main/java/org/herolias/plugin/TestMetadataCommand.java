@@ -66,8 +66,6 @@ public class TestMetadataCommand extends AbstractAsyncCommand {
             ItemStack updated = heldItem.withMetadata(metadata);
             player.getInventory().getHotbar().setItemStackForSlot(
                     (short) player.getInventory().getActiveHotbarSlot(), updated);
-            player.getInventory().markChanged();
-            player.sendInventory();
 
             // Refresh tooltips so the change is potentially visible if a provider uses it
             plugin.getTooltipsApi().refreshPlayer(player.getUuid());

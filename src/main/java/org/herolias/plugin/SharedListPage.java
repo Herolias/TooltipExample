@@ -93,7 +93,6 @@ public class SharedListPage extends InteractiveCustomUIPage<SharedListEventData>
             }
         }
 
-        inventory.markChanged();
 
         if (failed > 0) {
             playerRef.sendMessage(Message.raw("Returned " + returned + " item(s). " + failed + " item(s) couldn't fit and remain in the list."));

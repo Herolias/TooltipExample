@@ -239,7 +239,6 @@ public class InventoryUIPage extends InteractiveCustomUIPage<InventoryUIEventDat
             }
         }
 
-        inventory.markChanged();
         playerRef.sendMessage(Message.raw("Added " + count + " item(s) to the shared list!"));
         closePage(ref, store);
     }
